@@ -3,7 +3,7 @@ const routes = [
     path: '/login',
     component: () => import('pages/auth/Login'),
     children: [
-      { path: '', component: () => import('pages/auth/LoginBackground.vue') }
+      { path: '', component: () => import('pages/auth/LoginBackground') }
     ]
   },
   {

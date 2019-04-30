@@ -29,6 +29,14 @@ function bindAuthRefreshInterceptor (axios, refreshTokenCall, router, statusCode
       return Promise.reject(error)
     }
 
+    // Reject promise if a request for obtaining access token was failed
+    if (error.response && error.response.config &&
+      error.response.config.method.toLowerCase() === 'post' &&
+      error.response.config.url.endsWith('/api/token/obtain/')) {
+      error.message = `[${error.response.status}] 用户名 或 密码 错误 !`
+      return Promise.reject(error)
+    }
+
     // other simultaneous authorization failed requests will be retried
     // after refreshCall is resolved
     if (refreshCall) {
@@ -69,11 +77,8 @@ export default ({ Vue, store, router }) => {
   const refreshToken = (failedRequest) =>
     axios.post(store.state.auth.end_points.refresh_jwt, { refresh: localStorage.getItem('auth_refresh_token') })
       .then(response => {
-        console.log(response.data.access)
-
         localStorage.setItem('auth_access_token', response.data.access)
         failedRequest.response.config.headers['Authorization'] = 'Bearer ' + response.data.access
-        console.log('99999999999999999999999999999999999')
         return Promise.resolve(response)
       })
 

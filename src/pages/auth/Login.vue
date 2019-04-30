@@ -4,24 +4,42 @@
       <div class="login-form-input-fields">
         <q-input
           v-model="form.username"
+          label="帐号"
           type="text"
-          dark clearable
-          float-label="帐号"
+          maxlength="50"
+          dark clearable dense
           color="blue-grey-3"
-        />
+          input-class='text-center'
+        >
+          <template v-slot:before>
+            <q-icon name="person" size="2rem" />
+          </template>
+        </q-input>
         <q-input
           v-model="form.password"
-          type="password"
-          dark clearable
-          float-label="密码"
+          label="密码"
+          :type="ui.isPwd ? 'password' : 'text'"
+          dark clearable dense
           color="blue-grey-3"
-        />
+          input-class='text-center'
+        >
+          <template v-slot:before>
+            <q-icon name="vpn_key" size="2rem" />
+          </template>
+          <template v-slot:append>
+            <q-icon
+              :name="ui.isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="ui.isPwd = !ui.isPwd"
+            />
+          </template>
+        </q-input>
       </div>
       <br>
       <q-btn
         flat
         unelevated
-        :loading="loading"
+        :loading="ui.loading"
         icon-right="send"
         color="grey"
         text-color="lightgrey"
@@ -46,7 +64,10 @@ export default {
         username: '',
         password: ''
       },
-      loading: false
+      ui: {
+        loading: false,
+        isPwd: true
+      }
     }
   },
   validations: {
@@ -59,36 +80,34 @@ export default {
   mounted () {},
   methods: {
     submit () {
-      this.loading = true
+      this.ui.loading = true
 
       this.$v.form.$touch()
       if (this.$v.form.$error) {
         this.$q.notify({
-          position: 'center',
+          position: 'top',
           message: 'Account password cannot be empty!',
           timeout: 1500,
           color: 'red',
           closeBtn: 'X'
         })
-        this.loading = false
+        this.ui.loading = false
         return
       }
-      let that = this
       this.$store
         .dispatch('auth/' + OBTAIN_TOKEN, this.form)
         .then((response) => {
-          that.loading = false
-          that.$router.push('/')
-        })
-        .catch(err => {
-          that.loading = false
-          that.$q.notify({
-            position: 'center',
+          this.$router.push('/')
+        }).catch(err => {
+          this.$q.notify({
+            position: 'top',
             message: err.message,
-            timeout: 1000,
+            timeout: 3000,
             color: 'red',
             closeBtn: 'X'
           })
+        }).finally(() => {
+          this.ui.loading = false
         })
     }
   }
@@ -97,21 +116,29 @@ export default {
 
 <style scoped>
 .login .login-background{
-    z-index:-1000;
+  z-index:-1000;
 }
 .login .login-form{
-    position: absolute;
-    color: white;
-    /* background-color: lightblue; */
-    z-index: 100;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    top: 0px;
+  position: absolute;
+  color: white;
+  /* background-color: lightblue; */
+  z-index: 100;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  top: 0px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+.login .login-form-input-fields{
+  min-width: 260px;
+  max-width: 360px;
+}
+.login div.row.q-field:nth-child(2){
+  margin-top:1rem;
+}
+
 </style>
