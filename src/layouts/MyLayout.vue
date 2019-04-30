@@ -91,6 +91,16 @@ export default {
       leftDrawerOpen: this.$q.platform.is.desktop
     }
   },
+  beforeCreate () {
+    console.log('++++++++++++++++++++++++++')
+    this.$axios.get('http://127.0.0.1:8000/api/base/accounts/')
+      .then((response) => {
+        console.log(response)
+      }).catch((error) => {
+        console.log('~~~', error)
+        console.log('redirect to login')
+      })
+  },
   methods: {
     openURL
   }

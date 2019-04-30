@@ -22,5 +22,21 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   })
 
+  Router.beforeEach((to, from, next) => {
+    if (localStorage.getItem('auth_access_token')) {
+      if (to.path === '/login') {
+        next('/')
+      } else {
+        next()
+      }
+    } else {
+      if (to.path === '/login') {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  })
+
   return Router
 }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import example from './module-example'
+import auth from './modules/auth'
 
 Vue.use(Vuex)
 
@@ -12,8 +13,14 @@ Vue.use(Vuex)
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
+    state: {
+      user: {},
+      permissions: []
+    },
+
     modules: {
       // example
+      auth
     },
 
     // enable strict mode (adds overhead!)

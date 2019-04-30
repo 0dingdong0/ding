@@ -1,0 +1,1 @@
+export const OBTAIN_TOKEN = 'OBTAIN_TOKEN'
