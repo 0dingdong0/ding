@@ -84,28 +84,13 @@ export default {
 
       this.$v.form.$touch()
       if (this.$v.form.$error) {
-        this.$q.notify({
-          position: 'top',
-          message: 'Account password cannot be empty!',
-          timeout: 1500,
-          color: 'red',
-          closeBtn: 'X'
-        })
         this.ui.loading = false
-        return
+        throw new Error('用户名 和 密码 不能为空 ！')
       }
       this.$store
         .dispatch('auth/' + OBTAIN_TOKEN, this.form)
         .then((response) => {
           this.$router.push('/')
-        }).catch(err => {
-          this.$q.notify({
-            position: 'top',
-            message: err.message,
-            timeout: 3000,
-            color: 'red',
-            closeBtn: 'X'
-          })
         }).finally(() => {
           this.ui.loading = false
         })

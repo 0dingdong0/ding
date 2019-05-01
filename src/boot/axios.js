@@ -33,7 +33,6 @@ function bindAuthRefreshInterceptor (axios, refreshTokenCall, router, statusCode
     if (error.response && error.response.config &&
       error.response.config.method.toLowerCase() === 'post' &&
       error.response.config.url.endsWith('/api/token/obtain/')) {
-      error.message = `[${error.response.status}] 用户名 或 密码 错误 !`
       return Promise.reject(error)
     }
 
