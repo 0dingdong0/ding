@@ -88,8 +88,8 @@ export default {
         throw new Error('用户名 和 密码 不能为空 ！')
       }
       this.$store
-        .dispatch('auth/' + OBTAIN_TOKEN, this.form)
-        .then((response) => {
+        .dispatch(`auth/${OBTAIN_TOKEN}`, this.form)
+        .then(() => {
           this.$router.push('/')
         }).finally(() => {
           this.ui.loading = false

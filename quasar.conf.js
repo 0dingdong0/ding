@@ -7,6 +7,7 @@ module.exports = function (ctx) {
     boot: [
       'i18n',
       'axios',
+      'init.app',
       'vuelidate',
       'global.error.handling'
     ],
@@ -30,6 +31,7 @@ module.exports = function (ctx) {
       components: [
         'QLayout',
         'QHeader',
+        'QFooter',
         'QDrawer',
         'QPageContainer',
         'QPage',
@@ -41,7 +43,16 @@ module.exports = function (ctx) {
         'QItem',
         'QItemSection',
         'QItemLabel',
-        'QInput'
+        'QInput',
+        'QTabs',
+        'QTab',
+        'QTabPanels',
+        'QTabPanel',
+        'QScrollArea',
+        'QAvatar',
+        'QImg',
+        'QSeparator',
+        'QExpansionItem'
       ],
 
       directives: [
@@ -61,7 +72,7 @@ module.exports = function (ctx) {
 
     build: {
       scopeHoisting: true,
-      // vueRouterMode: 'history',
+      vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
