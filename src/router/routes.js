@@ -1,6 +1,6 @@
 const loginPath = {
   path: '/login',
-  component: () => import('pages/auth/Login'),
+  component: () => import('pages/auth/Login.vue'),
   children: [
     { path: '', component: () => import('pages/auth/LoginBackground') }
   ]

@@ -32,6 +32,9 @@ export default {
       commit(UPDATE_TOKEN, response.data)
     },
     async [GET_AND_UPDATE_CURRENT_ACCOUNT] ({ commit, state }) {
+      if (!localStorage.get('auth_access_token')) {
+        return
+      }
       let response = await this.$axios.get(state.end_points.get_current_account)
       // console.log('action', response.data)
 
@@ -45,8 +48,10 @@ export default {
         permissions[mod].push(perm)
       }
 
-      commit(UPDATE_CURRENT_ACCOUNT, { account: response.data, permissions })
-      return response.data
+      let account = response.data.account
+
+      commit(UPDATE_CURRENT_ACCOUNT, { account: account, permissions })
+      return { account, permissions }
     }
   },
   getters: {

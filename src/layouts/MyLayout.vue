@@ -6,11 +6,11 @@
           flat
           dense
           round
-          @click="leftDrawerOpen = !leftDrawerOpen"
+          @click="ui.leftDrawerOpen = !ui.leftDrawerOpen"
           aria-label="Menu"
         >
-          <q-icon name="menu" v-if="leftDrawerOpen"/>
-          <q-icon name="more_vert" v-if="!leftDrawerOpen"/>
+          <q-icon name="menu" v-if="ui.leftDrawerOpen"/>
+          <q-icon name="more_vert" v-if="!ui.leftDrawerOpen"/>
         </q-btn>
 
         <q-toolbar-title
@@ -20,12 +20,12 @@
         </q-toolbar-title>
 
         <q-tabs
-          v-model="currentModule"
+          v-model="ui.currentModule"
           inline-label dense shrink
           align="right"
           class="text-white self-end q-pr-md"
         >
-          <q-tab v-for="mod in activeModules"
+          <q-tab v-for="mod in ui.activeModules"
             :key="mod.key"
             :name="mod.name"
             :icon="mod.icon"
@@ -37,22 +37,23 @@
           flat
           dense
           round
-          @click="rightDrawerOpen = !rightDrawerOpen"
+          @click="ui.rightDrawerOpen = !ui.rightDrawerOpen"
           aria-label="Menu"
         >
-          <q-icon name="menu" v-if="rightDrawerOpen"/>
-          <q-icon name="more_vert" v-if="!rightDrawerOpen"/>
+          <q-icon name="menu" v-if="ui.rightDrawerOpen"/>
+          <q-icon name="more_vert" v-if="!ui.rightDrawerOpen"/>
         </q-btn>
       </q-toolbar>
 
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-model="ui.leftDrawerOpen"
       bordered
       content-class="bg-grey-2"
-      :width="leftDrawerWith"
+      :width="ui.leftDrawerWith"
     >
+      <!-- TODO:  -->
       <q-img class="absolute-top" src="https://cdn.quasar-framework.org/img/material.png" style="height: 150px">
         <div class="absolute-bottom bg-transparent">
           <q-avatar size="56px" class="q-mb-sm">
@@ -128,10 +129,10 @@
     </q-page-container>
 
     <q-drawer
-      v-model="rightDrawerOpen"
+      v-model="ui.rightDrawerOpen"
       side="right"
       content-class="bg-grey-1"
-      :width="rightDrawerWith"
+      :width="ui.rightDrawerWith"
     >
       <router-view name='menu' @close_module="closeModule"/>
     </q-drawer>
@@ -151,69 +152,93 @@ const modules = {
   'home': homeModuleConfig,
   'settings': settingsModuleConfig
 }
-console.log(modules)
+
 export default {
   name: 'MyLayout',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop,
-      leftDrawerWith: 260,
-      rightDrawerOpen: true,
-      rightDrawerWith: 200,
-      currentModule: undefined,
-      activeModules: []
+      ui: {
+        leftDrawerOpen: this.$q.platform.is.desktop,
+        leftDrawerWith: 260,
+        rightDrawerOpen: true,
+        rightDrawerWith: 200,
+        currentModule: undefined,
+        activeModules: []
+      }
     }
   },
   beforeCreate () {
+    console.log(this.$store.state.auth.permissions)
+    // let { account } = data
+    // let { routes } = router.options
+    // let routeData = routes.find(r => r.path === '/')
+
+    // for (let name in modules) {
+    //   let mod = modules[name]
+
+    //   if (!store.getters['auth/hasPermission'](account, mod.config.permissions)) {
+    //     let idx = activeModules.indexOf(mod.config.name)
+    //     if (idx !== -1) {
+    //       activeModules.splice(idx, 1)
+    //     }
+    //     continue
+    //   }
+    //   console.log('perm:', mod.config.name)
+    //   if (routeData.children.indexOf(mod.routes) === -1) {
+    //     routeData.children.push(mod.routes)
+    //   }
+    // }
+    // router.addRoutes([routeData])
+    // localStorage.setItem('activeModules', activeModules.join(','))
   },
   created () {
     let aMods = localStorage.getItem('activeModules')
     aMods && (aMods = aMods.split(','))
     aMods || (aMods = [homeModuleConfig.name])
     for (let aMod of aMods) {
-      this.activeModules.push(modules[aMod])
+      this.ui.activeModules.push(modules[aMod])
     }
 
     if (this.$route.path === '/') {
       this.activeModule('home')
     } else {
-      this.currentModule = this.$route.path.split('/')[1]
+      this.ui.currentModule = this.$route.path.split('/')[1]
     }
   },
   methods: {
     openURL,
     activeModule (name) {
       let mod = modules[name]
-      if (this.activeModules.indexOf(mod) === -1) {
-        this.activeModules.push(mod)
+      if (this.ui.activeModules.indexOf(mod) === -1) {
+        this.ui.activeModules.push(mod)
         localStorage.setItem(
           'activeModules',
-          this.activeModules.map(mod => mod.name).join(',')
+          this.ui.activeModules.map(mod => mod.name).join(',')
         )
       }
 
       this.$router.push(
         { name: name },
-        () => { this.currentModule = name }
+        () => { this.ui.currentModule = name }
       )
     },
     closeModule (modName) {
-      let idx = this.activeModules.indexOf(modules[modName])
+      let idx = this.ui.activeModules.indexOf(modules[modName])
 
       if (idx < 1) {
         return
       }
-      this.activeModules.splice(idx, 1)
+      this.ui.activeModules.splice(idx, 1)
       localStorage.setItem(
         'activeModules',
-        this.activeModules.map(mod => mod.name).join(',')
+        this.ui.activeModules.map(mod => mod.name).join(',')
       )
 
-      let nextMod = this.activeModules[--idx].name
+      let nextMod = this.ui.activeModules[--idx].name
 
       this.$router.push(
         { name: nextMod },
-        () => { this.currentModule = nextMod }
+        () => { this.ui.currentModule = nextMod }
       )
     }
   }

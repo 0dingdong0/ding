@@ -7,9 +7,9 @@ module.exports = function (ctx) {
     boot: [
       'i18n',
       'axios',
-      'init.app',
+      'global.error.handling',
       'vuelidate',
-      'global.error.handling'
+      'init.app'
     ],
 
     css: [

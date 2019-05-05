@@ -15,7 +15,7 @@ export default ({ Vue, router }) => {
     notify(error.message)
   }
 
-  window.addEventListener('unhandledrejection', function (event) {
+  window.addEventListener('unhandledrejection', (event) => {
     event.preventDefault()
 
     event.promise.catch(error => {
@@ -35,11 +35,11 @@ export default ({ Vue, router }) => {
             }
             break
           default:
-            console.log(event)
+            console.error(error)
             notify('unhandled [networking promise] rejections! see details in console.')
         }
       } else {
-        console.log(event)
+        console.error(error)
         notify('unhandled rejections! see details in console.')
       }
     })
