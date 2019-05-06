@@ -1,3 +1,44 @@
+INLINE_ELEMENTS = [
+  "a",
+  "abbr",
+  "audio",
+  "b",
+  "bdi",
+  "bdo",
+  "canvas",
+  "cite",
+  "code",
+  "data",
+  "del",
+  "dfn",
+  "em",
+  "i",
+  "iframe",
+  "ins",
+  "kbd",
+  "label",
+  "map",
+  "mark",
+  "noscript",
+  "object",
+  "output",
+  "picture",
+  "q",
+  "ruby",
+  "s",
+  "samp",
+  "small",
+  "span",
+  "strong",
+  "sub",
+  "sup",
+  "svg",
+  "time",
+  "u",
+  "var",
+  "video"
+]
+
 module.exports = {
   root: true,
 
@@ -13,25 +54,58 @@ module.exports = {
   extends: [
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
-    'plugin:vue/essential',
-    '@vue/standard'
+    'standard',
+    // 'plugin:import/errors',
+    // 'plugin:import/warnings',
+    'eslint:recommended',
+    // 'plugin:prettier/recommended',
+    'plugin:vue/recommended',
+    // 'prettier/vue'
   ],
 
   // required to lint *.vue files
   plugins: [
-    'vue'
+    'vue',
+    // 'prettier',
+    'import'
   ],
 
   globals: {
-    'ga': true, // Google Analytics
-    'cordova': true,
-    '__statics': true,
-    'process': true
+    ga: true, // Google Analytics
+    cordova: true,
+    __statics: true,
+    process: true
   },
 
   // add your custom rules here
   rules: {
+    // 'prettier/prettier': [
+    //   'error',
+    //   {
+    //     singleQuote: true,
+    //     trailingComma: 'none',
+    //     bracketSpacing: true,
+    //     jsxBracketSameLine: false,
+    //     parser: 'flow'
+    //   }
+    // ],
     // allow async-await
+    "vue/max-attributes-per-line": 'off',
+    // "vue/max-attributes-per-line": ["error", {
+    //   "singleline": 4,
+    //   "multiline": {
+    //     "max": 3,
+    //     "allowFirstLine": true
+    //   }
+    // }],
+    "vue/singleline-html-element-content-newline": ["error", {
+      "ignoreWhenNoAttributes": true,
+      "ignoreWhenEmpty": true,
+      "ignores": ["pre", "textarea", ...INLINE_ELEMENTS]
+    }],
+    "vue/html-closing-bracket-newline": 'off',
+    "vue/html-closing-bracket-spacing": 'off',
+    'no-empty': 'off',
     'generator-star-spacing': 'off',
     // allow paren-less arrow functions
     'arrow-parens': 'off',

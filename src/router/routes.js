@@ -12,7 +12,7 @@ const rootPath = {
   children: []
 }
 
-const routes = [ loginPath, rootPath ]
+const routes = [loginPath, rootPath]
 
 // Always leave this as last one
 if (process.env.MODE !== 'ssr') {

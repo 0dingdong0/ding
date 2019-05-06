@@ -1,11 +1,5 @@
-import {
-  UPDATE_TOKEN,
-  UPDATE_CURRENT_ACCOUNT
-} from './mutation-types'
-import {
-  OBTAIN_TOKEN,
-  GET_AND_UPDATE_CURRENT_ACCOUNT
-} from './action-types'
+import { UPDATE_TOKEN, UPDATE_CURRENT_ACCOUNT } from './mutation-types'
+import { OBTAIN_TOKEN, GET_AND_UPDATE_CURRENT_ACCOUNT } from './action-types'
 
 // TODO: Remove hardcoding of dev server
 let server = 'http://localhost:8000'
@@ -23,11 +17,11 @@ export default {
     }
   },
   mutations: {
-    [UPDATE_TOKEN] (state, token) {
+    [UPDATE_TOKEN](state, token) {
       token.access && localStorage.setItem('auth_access_token', token.access)
       token.refresh && localStorage.setItem('auth_refresh_token', token.refresh)
     },
-    [UPDATE_CURRENT_ACCOUNT] (state, data) {
+    [UPDATE_CURRENT_ACCOUNT](state, data) {
       state.user = {
         ...state.user,
         ...data.account
@@ -39,17 +33,11 @@ export default {
     }
   },
   actions: {
-    async [OBTAIN_TOKEN] ({
-      commit,
-      state
-    }, form) {
+    async [OBTAIN_TOKEN]({ commit, state }, form) {
       let response = await this.$axios.post(state.end_points.obtain_jwt, form)
       commit(UPDATE_TOKEN, response.data)
     },
-    async [GET_AND_UPDATE_CURRENT_ACCOUNT] ({
-      commit,
-      state
-    }) {
+    async [GET_AND_UPDATE_CURRENT_ACCOUNT]({ commit, state }) {
       if (!localStorage.getItem('auth_access_token')) {
         throw Error('no access token found!')
       }
@@ -80,7 +68,7 @@ export default {
     }
   },
   getters: {
-    hasPermission: (state) => (permissions) => {
+    hasPermission: state => permissions => {
       if (state.user.is_superuser) {
         return true
       }

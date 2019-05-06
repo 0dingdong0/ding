@@ -14,7 +14,7 @@
           input-class="text-center"
         >
           <template v-slot:before>
-            <q-icon name="person" size="2rem"/>
+            <q-icon name="person" size="2rem" />
           </template>
         </q-input>
         <q-input
@@ -28,7 +28,7 @@
           input-class="text-center"
         >
           <template v-slot:before>
-            <q-icon name="vpn_key" size="2rem"/>
+            <q-icon name="vpn_key" size="2rem" />
           </template>
           <template v-slot:append>
             <q-icon
@@ -39,7 +39,7 @@
           </template>
         </q-input>
       </div>
-      <br>
+      <br >
       <q-btn
         flat
         unelevated
@@ -52,27 +52,27 @@
       />
     </div>
     <div class="login-background">
-      <router-view/>
+      <router-view />
     </div>
   </div>
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
-import { OBTAIN_TOKEN } from '../../store/modules/action-types'
+import { required } from "vuelidate/lib/validators";
+import { OBTAIN_TOKEN } from "../../store/modules/action-types";
 
 export default {
-  data () {
+  data() {
     return {
       form: {
-        username: '',
-        password: ''
+        username: "",
+        password: ""
       },
       ui: {
         loading: false,
         isPwd: true
       }
-    }
+    };
   },
   validations: {
     form: {
@@ -81,27 +81,27 @@ export default {
     }
   },
   computed: {},
-  mounted () {},
+  mounted() {},
   methods: {
-    submit () {
-      this.ui.loading = true
+    submit() {
+      this.ui.loading = true;
 
-      this.$v.form.$touch()
+      this.$v.form.$touch();
       if (this.$v.form.$error) {
-        this.ui.loading = false
-        throw new Error('用户名 和 密码 不能为空 ！')
+        this.ui.loading = false;
+        throw new Error("用户名 和 密码 不能为空 ！");
       }
       this.$store
         .dispatch(`auth/${OBTAIN_TOKEN}`, this.form)
         .then(() => {
-          this.$router.push('/')
+          this.$router.push("/");
         })
         .finally(() => {
-          this.ui.loading = false
-        })
+          this.ui.loading = false;
+        });
     }
   }
-}
+};
 </script>
 
 <style scoped>

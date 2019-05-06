@@ -26,7 +26,4 @@ const config = {
   permissions: []
 }
 
-export {
-  config,
-  routes
-}
+export { config, routes }

@@ -11,15 +11,18 @@ const routes = {
     default: () => import('./index.vue'),
     menu: () => import('./menu.vue')
   },
-  children: [{
-    name: 'user-profile',
-    path: 'user-profile',
-    component: () => import('./UserProfile.vue')
-  }, {
-    name: 'change-password',
-    path: 'change-password',
-    component: () => import('./ChangePassword.vue')
-  }]
+  children: [
+    {
+      name: 'user-profile',
+      path: 'user-profile',
+      component: () => import('./UserProfile.vue')
+    },
+    {
+      name: 'change-password',
+      path: 'change-password',
+      component: () => import('./ChangePassword.vue')
+    }
+  ]
 }
 
 const config = {
@@ -36,7 +39,4 @@ const config = {
   permissions: []
 }
 
-export {
-  config,
-  routes
-}
+export { config, routes }
