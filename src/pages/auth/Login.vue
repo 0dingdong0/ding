@@ -7,24 +7,28 @@
           label="帐号"
           type="text"
           maxlength="50"
-          dark clearable dense
+          dark
+          clearable
+          dense
           color="blue-grey-3"
-          input-class='text-center'
+          input-class="text-center"
         >
           <template v-slot:before>
-            <q-icon name="person" size="2rem" />
+            <q-icon name="person" size="2rem"/>
           </template>
         </q-input>
         <q-input
           v-model="form.password"
           label="密码"
           :type="ui.isPwd ? 'password' : 'text'"
-          dark clearable dense
+          dark
+          clearable
+          dense
           color="blue-grey-3"
-          input-class='text-center'
+          input-class="text-center"
         >
           <template v-slot:before>
-            <q-icon name="vpn_key" size="2rem" />
+            <q-icon name="vpn_key" size="2rem"/>
           </template>
           <template v-slot:append>
             <q-icon
@@ -48,7 +52,7 @@
       />
     </div>
     <div class="login-background">
-      <router-view />
+      <router-view/>
     </div>
   </div>
 </template>
@@ -91,7 +95,8 @@ export default {
         .dispatch(`auth/${OBTAIN_TOKEN}`, this.form)
         .then(() => {
           this.$router.push('/')
-        }).finally(() => {
+        })
+        .finally(() => {
           this.ui.loading = false
         })
     }
@@ -100,10 +105,10 @@ export default {
 </script>
 
 <style scoped>
-.login .login-background{
-  z-index:-1000;
+.login .login-background {
+  z-index: -1000;
 }
-.login .login-form{
+.login .login-form {
   position: absolute;
   color: white;
   /* background-color: lightblue; */
@@ -118,12 +123,11 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.login .login-form-input-fields{
+.login .login-form-input-fields {
   min-width: 260px;
   max-width: 360px;
 }
-.login div.row.q-field:nth-child(2){
-  margin-top:1rem;
+.login div.row.q-field:nth-child(2) {
+  margin-top: 1rem;
 }
-
 </style>

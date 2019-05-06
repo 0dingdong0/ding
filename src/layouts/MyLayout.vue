@@ -2,49 +2,36 @@
   <q-layout view="lHh Lpr lff">
     <q-header elevated class="glossy no-wrap">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          @click="ui.leftDrawerOpen = !ui.leftDrawerOpen"
-          aria-label="Menu"
-        >
+        <q-btn flat dense round @click="ui.leftDrawerOpen = !ui.leftDrawerOpen" aria-label="Menu">
           <q-icon name="menu" v-if="ui.leftDrawerOpen"/>
           <q-icon name="more_vert" v-if="!ui.leftDrawerOpen"/>
         </q-btn>
 
-        <q-toolbar-title
-          style="min-width:120px;"
-        >
-          Quasar App
-        </q-toolbar-title>
+        <q-toolbar-title style="min-width:120px;">Quasar App</q-toolbar-title>
 
         <q-tabs
           v-model="ui.currentModule"
-          inline-label dense shrink
+          inline-label
+          dense
+          shrink
           align="right"
           class="text-white self-end q-pr-md"
         >
-          <q-tab v-for="mod in ui.activeModules"
+          <q-tab
+            v-for="mod in ui.activeModules"
             :key="mod.key"
             :name="mod.name"
             :icon="mod.icon"
             :label="mod.label"
-            @click="activeModule(mod.name)" />
+            @click="activeModule(mod.name)"
+          />
         </q-tabs>
 
-        <q-btn
-          flat
-          dense
-          round
-          @click="ui.rightDrawerOpen = !ui.rightDrawerOpen"
-          aria-label="Menu"
-        >
+        <q-btn flat dense round @click="ui.rightDrawerOpen = !ui.rightDrawerOpen" aria-label="Menu">
           <q-icon name="menu" v-if="ui.rightDrawerOpen"/>
           <q-icon name="more_vert" v-if="!ui.rightDrawerOpen"/>
         </q-btn>
       </q-toolbar>
-
     </q-header>
 
     <q-drawer
@@ -54,7 +41,11 @@
       :width="ui.leftDrawerWith"
     >
       <!-- TODO:  -->
-      <q-img class="absolute-top" src="https://cdn.quasar-framework.org/img/material.png" style="height: 150px">
+      <q-img
+        class="absolute-top"
+        src="https://cdn.quasar-framework.org/img/material.png"
+        style="height: 150px"
+      >
         <div class="absolute-bottom bg-transparent">
           <q-avatar size="56px" class="q-mb-sm">
             <img src="https://cdn.quasar-framework.org/img/boy-avatar.png">
@@ -63,11 +54,13 @@
           <div>@rstoenescu</div>
         </div>
       </q-img>
-      <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
+      <q-scroll-area
+        style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd"
+      >
         <q-list padding>
           <q-item clickable tag="a" target="_blank" href="http://v1.quasar-framework.org">
             <q-item-section avatar>
-              <q-icon name="school" />
+              <q-icon name="school"/>
             </q-item-section>
             <q-item-section>
               <q-item-label>Docs</q-item-label>
@@ -76,7 +69,7 @@
           </q-item>
           <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/">
             <q-item-section avatar>
-              <q-icon name="code" />
+              <q-icon name="code"/>
             </q-item-section>
             <q-item-section>
               <q-item-label>Github</q-item-label>
@@ -85,7 +78,7 @@
           </q-item>
           <q-item clickable tag="a" target="_blank" href="http://chat.quasar-framework.org">
             <q-item-section avatar>
-              <q-icon name="chat" />
+              <q-icon name="chat"/>
             </q-item-section>
             <q-item-section>
               <q-item-label>Discord Chat Channel</q-item-label>
@@ -94,7 +87,7 @@
           </q-item>
           <q-item clickable tag="a" target="_blank" href="https://forum.quasar-framework.org">
             <q-item-section avatar>
-              <q-icon name="record_voice_over" />
+              <q-icon name="record_voice_over"/>
             </q-item-section>
             <q-item-section>
               <q-item-label>Forum</q-item-label>
@@ -103,7 +96,7 @@
           </q-item>
           <q-item clickable tag="a" target="_blank" href="https://twitter.com/quasarframework">
             <q-item-section avatar>
-              <q-icon name="rss_feed" />
+              <q-icon name="rss_feed"/>
             </q-item-section>
             <q-item-section>
               <q-item-label>Twitter</q-item-label>
@@ -113,7 +106,7 @@
           <q-separator/>
           <q-item clickable v-ripple @click="activeModule('settings')">
             <q-item-section avatar>
-              <q-icon name="settings" />
+              <q-icon name="settings"/>
             </q-item-section>
             <q-item-section>
               <q-item-label>设置</q-item-label>
@@ -125,7 +118,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
 
     <q-drawer
@@ -134,12 +127,11 @@
       content-class="bg-grey-1"
       :width="ui.rightDrawerWith"
     >
-      <router-view name='menu' @close_module="closeModule"/>
+      <router-view name="menu" @close_module="closeModule"/>
     </q-drawer>
     <q-footer class="bg-grey-1 text-black row justify-center q-pa-md">
-        <div>Quasar v{{ $q.version }}</div>
+      <div>Quasar v{{ $q.version }}</div>
     </q-footer>
-
   </q-layout>
 </template>
 
@@ -149,8 +141,8 @@ import { config as settingsModuleConfig } from 'components/settings'
 import { openURL } from 'quasar'
 
 const modules = {
-  'home': homeModuleConfig,
-  'settings': settingsModuleConfig
+  home: homeModuleConfig,
+  settings: settingsModuleConfig
 }
 
 export default {
@@ -196,7 +188,9 @@ export default {
     aMods && (aMods = aMods.split(','))
     aMods || (aMods = [homeModuleConfig.name])
     for (let aMod of aMods) {
-      this.ui.activeModules.push(modules[aMod])
+      if (this.$store.getters['auth/hasPermission'](modules[aMod].permissions)) {
+        this.ui.activeModules.push(modules[aMod])
+      }
     }
 
     if (this.$route.path === '/') {
@@ -217,10 +211,9 @@ export default {
         )
       }
 
-      this.$router.push(
-        { name: name },
-        () => { this.ui.currentModule = name }
-      )
+      this.$router.push({ name: name }, () => {
+        this.ui.currentModule = name
+      })
     },
     closeModule (modName) {
       let idx = this.ui.activeModules.indexOf(modules[modName])
@@ -236,10 +229,9 @@ export default {
 
       let nextMod = this.ui.activeModules[--idx].name
 
-      this.$router.push(
-        { name: nextMod },
-        () => { this.ui.currentModule = nextMod }
-      )
+      this.$router.push({ name: nextMod }, () => {
+        this.ui.currentModule = nextMod
+      })
     }
   }
 }

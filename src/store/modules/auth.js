@@ -1,5 +1,11 @@
-import { UPDATE_TOKEN, UPDATE_CURRENT_ACCOUNT } from './mutation-types'
-import { OBTAIN_TOKEN, GET_AND_UPDATE_CURRENT_ACCOUNT } from './action-types'
+import {
+  UPDATE_TOKEN,
+  UPDATE_CURRENT_ACCOUNT
+} from './mutation-types'
+import {
+  OBTAIN_TOKEN,
+  GET_AND_UPDATE_CURRENT_ACCOUNT
+} from './action-types'
 
 // TODO: Remove hardcoding of dev server
 let server = 'http://localhost:8000'
@@ -22,18 +28,30 @@ export default {
       token.refresh && localStorage.setItem('auth_refresh_token', token.refresh)
     },
     [UPDATE_CURRENT_ACCOUNT] (state, data) {
-      state.user = { ...state.user, ...data.account }
-      state.permissions = { ...state.permissions, ...data.permissions }
+      state.user = {
+        ...state.user,
+        ...data.account
+      }
+      state.permissions = {
+        ...state.permissions,
+        ...data.permissions
+      }
     }
   },
   actions: {
-    async [OBTAIN_TOKEN] ({ commit, state }, form) {
+    async [OBTAIN_TOKEN] ({
+      commit,
+      state
+    }, form) {
       let response = await this.$axios.post(state.end_points.obtain_jwt, form)
       commit(UPDATE_TOKEN, response.data)
     },
-    async [GET_AND_UPDATE_CURRENT_ACCOUNT] ({ commit, state }) {
-      if (!localStorage.get('auth_access_token')) {
-        return
+    async [GET_AND_UPDATE_CURRENT_ACCOUNT] ({
+      commit,
+      state
+    }) {
+      if (!localStorage.getItem('auth_access_token')) {
+        throw Error('no access token found!')
       }
       let response = await this.$axios.get(state.end_points.get_current_account)
       // console.log('action', response.data)
@@ -50,13 +68,20 @@ export default {
 
       let account = response.data.account
 
-      commit(UPDATE_CURRENT_ACCOUNT, { account: account, permissions })
-      return { account, permissions }
+      commit(UPDATE_CURRENT_ACCOUNT, {
+        account: account,
+        permissions
+      })
+
+      return {
+        account,
+        permissions
+      }
     }
   },
   getters: {
-    hasPermission: (state) => (account, permissions) => {
-      if (account.is_superuser) {
+    hasPermission: (state) => (permissions) => {
+      if (state.user.is_superuser) {
         return true
       }
 
