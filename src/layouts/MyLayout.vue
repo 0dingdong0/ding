@@ -189,17 +189,17 @@
 </template>
 
 <script>
-import { config as homeModuleConfig } from "components/home";
-import { config as settingsModuleConfig } from "components/settings";
-import { openURL } from "quasar";
+import { config as homeModuleConfig } from 'components/home'
+import { config as settingsModuleConfig } from 'components/settings'
+import { openURL } from 'quasar'
 
 const modules = {
   home: homeModuleConfig,
   settings: settingsModuleConfig
-};
+}
 
 export default {
-  name: "MyLayout",
+  name: 'MyLayout',
   data() {
     return {
       ui: {
@@ -210,65 +210,65 @@ export default {
         currentModule: undefined,
         activeModules: []
       }
-    };
+    }
   },
   beforeCreate() {
-    console.log(this.$store.state.auth.permissions);
+    console.log(this.$store.state.auth.permissions)
   },
   created() {
-    let aMods = localStorage.getItem("activeModules");
-    aMods && (aMods = aMods.split(","));
-    aMods || (aMods = [homeModuleConfig.name]);
+    let aMods = localStorage.getItem('activeModules')
+    aMods && (aMods = aMods.split(','))
+    aMods || (aMods = [homeModuleConfig.name])
     for (let aMod of aMods) {
       if (
-        this.$store.getters["auth/hasPermission"](modules[aMod].permissions)
+        this.$store.getters['auth/hasPermission'](modules[aMod].permissions)
       ) {
-        this.ui.activeModules.push(modules[aMod]);
+        this.ui.activeModules.push(modules[aMod])
       }
     }
 
-    if (this.$route.path === "/") {
-      this.activeModule("home");
+    if (this.$route.path === '/') {
+      this.activeModule('home')
     } else {
-      this.ui.currentModule = this.$route.path.split("/")[1];
+      this.ui.currentModule = this.$route.path.split('/')[1]
     }
   },
   methods: {
     openURL,
     activeModule(name) {
-      let mod = modules[name];
+      let mod = modules[name]
       if (this.ui.activeModules.indexOf(mod) === -1) {
-        this.ui.activeModules.push(mod);
+        this.ui.activeModules.push(mod)
         localStorage.setItem(
-          "activeModules",
-          this.ui.activeModules.map(mod => mod.name).join(",")
-        );
+          'activeModules',
+          this.ui.activeModules.map(mod => mod.name).join(',')
+        )
       }
 
       this.$router.push({ name: name }, () => {
-        this.ui.currentModule = name;
-      });
+        this.ui.currentModule = name
+      })
     },
     closeModule(modName) {
-      let idx = this.ui.activeModules.indexOf(modules[modName]);
+      let idx = this.ui.activeModules.indexOf(modules[modName])
 
       if (idx < 1) {
-        return;
+        return
       }
-      this.ui.activeModules.splice(idx, 1);
+      this.ui.activeModules.splice(idx, 1)
       localStorage.setItem(
-        "activeModules",
-        this.ui.activeModules.map(mod => mod.name).join(",")
-      );
+        'activeModules',
+        this.ui.activeModules.map(mod => mod.name).join(',')
+      )
 
-      let nextMod = this.ui.activeModules[--idx].name;
+      let nextMod = this.ui.activeModules[--idx].name
 
       this.$router.push({ name: nextMod }, () => {
-        this.ui.currentModule = nextMod;
-      });
+        this.ui.currentModule = nextMod
+      })
     }
   }
-};
+}
 </script>
 
 <style>

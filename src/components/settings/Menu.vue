@@ -35,20 +35,20 @@
 </template>
 
 <script>
-import { config } from "components/settings";
+import { config } from 'components/settings'
 
 export default {
   data() {
     return {
       secondInsetLevel: 1
-    };
+    }
   },
   methods: {
     close: function() {
-      this.$emit("close_module", config.name);
+      this.$emit('close_module', config.name)
     }
   }
-};
+}
 </script>
 
 <style>
