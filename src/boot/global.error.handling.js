@@ -10,7 +10,7 @@ export default ({ Vue, router }) => {
   }
 
   Vue.config.errorHandler = (error, vm, info) => {
-    console.log(error)
+    console.error(error)
     console.log(info)
     notify(error.message)
   }

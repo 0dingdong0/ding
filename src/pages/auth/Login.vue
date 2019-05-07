@@ -2,54 +2,41 @@
   <div class="login">
     <div class="login-form">
       <div class="login-form-input-fields">
-        <q-input
-          v-model="form.username"
-          label="帐号"
-          type="text"
-          maxlength="50"
-          dark
-          clearable
-          dense
-          color="blue-grey-3"
-          input-class="text-center"
-        >
+        <q-input v-model="form.username"
+                 dark clearable dense
+                 type="text"
+                 label="帐号"
+                 maxlength="50"
+                 color="blue-grey-3"
+                 input-class="text-center">
           <template v-slot:before>
             <q-icon name="person" size="2rem" />
           </template>
         </q-input>
-        <q-input
-          v-model="form.password"
-          label="密码"
-          :type="ui.isPwd ? 'password' : 'text'"
-          dark
-          clearable
-          dense
-          color="blue-grey-3"
-          input-class="text-center"
-        >
+        <q-input v-model="form.password"
+                 dark clearable dense
+                 label="密码"
+                 color="blue-grey-3"
+                 input-class="text-center"
+                 :type="ui.isPwd ? 'password' : 'text'">
           <template v-slot:before>
             <q-icon name="vpn_key" size="2rem" />
           </template>
           <template v-slot:append>
-            <q-icon
-              :name="ui.isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="ui.isPwd = !ui.isPwd"
-            />
+            <q-icon class="cursor-pointer"
+                    :name="ui.isPwd ? 'visibility_off' : 'visibility'"
+                    @click="ui.isPwd = !ui.isPwd" />
           </template>
         </q-input>
       </div>
       <br >
-      <q-btn
-        flat
-        unelevated
-        :loading="ui.loading"
-        icon-right="send"
-        color="grey"
-        text-color="lightgrey"
-        label="Login"
-        @click="submit"
-      />
+      <q-btn flat unelevated
+             icon-right="send"
+             color="grey"
+             text-color="lightgrey"
+             label="Login"
+             :loading="ui.loading"
+             @click="submit" />
     </div>
     <div class="login-background">
       <router-view />

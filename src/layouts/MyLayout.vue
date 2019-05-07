@@ -2,13 +2,9 @@
   <q-layout view="lHh Lpr lff">
     <q-header elevated class="glossy no-wrap">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          aria-label="Menu"
-          @click="ui.leftDrawerOpen = !ui.leftDrawerOpen"
-        >
+        <q-btn flat dense round
+               aria-label="Menu"
+               @click="ui.leftDrawerOpen = !ui.leftDrawerOpen">
           <q-icon v-if="ui.leftDrawerOpen" name="menu" />
           <q-icon v-if="!ui.leftDrawerOpen" name="more_vert" />
         </q-btn>
@@ -17,49 +13,34 @@
           Quasar App
         </q-toolbar-title>
 
-        <q-tabs
-          v-model="ui.currentModule"
-          inline-label
-          dense
-          shrink
-          align="right"
-          class="text-white self-end q-pr-md"
-        >
-          <q-tab
-            v-for="mod in ui.activeModules"
-            :key="mod.key"
-            :name="mod.name"
-            :icon="mod.icon"
-            :label="mod.label"
-            @click="activeModule(mod.name)"
-          />
+        <q-tabs v-model="ui.currentModule"
+                inline-label dense shrink
+                align="right"
+                class="text-white self-end q-pr-md">
+          <q-tab v-for="mod in ui.activeModules"
+                 :key="mod.key"
+                 :name="mod.name"
+                 :icon="mod.icon"
+                 :label="mod.label"
+                 @click="activeModule(mod.name)" />
         </q-tabs>
 
-        <q-btn
-          flat
-          dense
-          round
-          aria-label="Menu"
-          @click="ui.rightDrawerOpen = !ui.rightDrawerOpen"
-        >
+        <q-btn flat dense round
+               aria-label="Menu"
+               @click="ui.rightDrawerOpen = !ui.rightDrawerOpen">
           <q-icon v-if="ui.rightDrawerOpen" name="menu" />
           <q-icon v-if="!ui.rightDrawerOpen" name="more_vert" />
         </q-btn>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="ui.leftDrawerOpen"
-      bordered
-      content-class="bg-grey-2"
-      :width="ui.leftDrawerWith"
-    >
+    <q-drawer v-model="ui.leftDrawerOpen" bordered
+              content-class="bg-grey-2"
+              :width="ui.leftDrawerWith">
       <!-- TODO:  -->
-      <q-img
-        class="absolute-top"
-        src="https://cdn.quasar-framework.org/img/material.png"
-        style="height: 150px"
-      >
+      <q-img src="https://cdn.quasar-framework.org/img/material.png"
+             class="absolute-top"
+             style="height: 150px">
         <div class="absolute-bottom bg-transparent">
           <q-avatar size="56px" class="q-mb-sm">
             <img src="https://cdn.quasar-framework.org/img/boy-avatar.png" >
@@ -71,15 +52,11 @@
         </div>
       </q-img>
       <q-scroll-area
-        style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd"
-      >
+        style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
         <q-list padding>
-          <q-item
-            clickable
-            tag="a"
-            target="_blank"
-            href="http://v1.quasar-framework.org"
-          >
+          <q-item href="http://v1.quasar-framework.org"
+                  clickable tag="a"
+                  target="_blank">
             <q-item-section avatar>
               <q-icon name="school" />
             </q-item-section>
@@ -90,12 +67,9 @@
               </q-item-label>
             </q-item-section>
           </q-item>
-          <q-item
-            clickable
-            tag="a"
-            target="_blank"
-            href="https://github.com/quasarframework/"
-          >
+          <q-item href="https://github.com/quasarframework/"
+                  clickable tag="a"
+                  target="_blank">
             <q-item-section avatar>
               <q-icon name="code" />
             </q-item-section>
@@ -106,12 +80,9 @@
               </q-item-label>
             </q-item-section>
           </q-item>
-          <q-item
-            clickable
-            tag="a"
-            target="_blank"
-            href="http://chat.quasar-framework.org"
-          >
+          <q-item href="http://chat.quasar-framework.org"
+                  clickable tag="a"
+                  target="_blank">
             <q-item-section avatar>
               <q-icon name="chat" />
             </q-item-section>
@@ -122,12 +93,9 @@
               </q-item-label>
             </q-item-section>
           </q-item>
-          <q-item
-            clickable
-            tag="a"
-            target="_blank"
-            href="https://forum.quasar-framework.org"
-          >
+          <q-item href="https://forum.quasar-framework.org"
+                  clickable tag="a"
+                  target="_blank">
             <q-item-section avatar>
               <q-icon name="record_voice_over" />
             </q-item-section>
@@ -138,12 +106,9 @@
               </q-item-label>
             </q-item-section>
           </q-item>
-          <q-item
-            clickable
-            tag="a"
-            target="_blank"
-            href="https://twitter.com/quasarframework"
-          >
+          <q-item href="https://twitter.com/quasarframework"
+                  clickable tag="a"
+                  target="_blank">
             <q-item-section avatar>
               <q-icon name="rss_feed" />
             </q-item-section>
@@ -174,12 +139,10 @@
       <router-view />
     </q-page-container>
 
-    <q-drawer
-      v-model="ui.rightDrawerOpen"
-      side="right"
-      content-class="bg-grey-1"
-      :width="ui.rightDrawerWith"
-    >
+    <q-drawer v-model="ui.rightDrawerOpen"
+              side="right"
+              content-class="bg-grey-1"
+              :width="ui.rightDrawerWith">
       <router-view name="menu" @close_module="closeModule" />
     </q-drawer>
     <q-footer class="bg-grey-1 text-black row justify-center q-pa-md">
