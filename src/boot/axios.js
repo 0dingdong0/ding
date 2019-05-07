@@ -20,7 +20,7 @@ axios.interceptors.request.use(request => {
  * @param {Array} statusCodes - Response Code when authorization failed
  * @return {AxiosInstance}
  */
-function bindAuthRefreshInterceptor (axios, refreshTokenCall, router, statusCodes = [401]) {
+function bindAuthRefreshInterceptor(axios, refreshTokenCall, router, statusCodes = [401]) {
   let refreshCall
 
   const id = axios.interceptors.response.use(res => res, error => {

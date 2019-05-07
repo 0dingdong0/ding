@@ -7,7 +7,6 @@ const modules = {
   [settingsModule.config.name]: settingsModule
 }
 
-// FIXME: infinate reboot by refresh token failed
 export default async ({ store, router }) => {
   return store
     .dispatch(`auth/${GET_AND_UPDATE_CURRENT_ACCOUNT}`)

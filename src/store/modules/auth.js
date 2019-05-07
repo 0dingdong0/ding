@@ -1,5 +1,11 @@
-import { UPDATE_TOKEN, UPDATE_CURRENT_ACCOUNT } from './mutation-types'
-import { OBTAIN_TOKEN, GET_AND_UPDATE_CURRENT_ACCOUNT } from './action-types'
+import {
+  UPDATE_TOKEN,
+  UPDATE_CURRENT_ACCOUNT
+} from './mutation-types'
+import {
+  OBTAIN_TOKEN,
+  GET_AND_UPDATE_CURRENT_ACCOUNT
+} from './action-types'
 
 // TODO: Remove hardcoding of dev server
 let server = 'http://localhost:8000'

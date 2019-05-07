@@ -30,8 +30,11 @@ export default ({ Vue, router }) => {
               // login failed
               console.log(response.data.detail)
               notify('用户名 或 密码 错误 ！')
-            } else {
+            } else if (method === 'post' && url.endsWith('/api/token/refresh/')) {
               notify('口令 刷新 失败 ！')
+            } else {
+              console.error(error)
+
             }
             break
           default:

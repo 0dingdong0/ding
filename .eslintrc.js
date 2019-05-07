@@ -55,12 +55,8 @@ module.exports = {
     // https://github.com/vuejs/eslint-plugin-vue#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'standard',
-    // 'plugin:import/errors',
-    // 'plugin:import/warnings',
     'eslint:recommended',
-    // 'plugin:prettier/recommended',
-    'plugin:vue/recommended',
-    // 'prettier/vue'
+    'plugin:vue/recommended'
   ],
 
   // required to lint *.vue files
@@ -79,25 +75,7 @@ module.exports = {
 
   // add your custom rules here
   rules: {
-    // 'prettier/prettier': [
-    //   'error',
-    //   {
-    //     singleQuote: true,
-    //     trailingComma: 'none',
-    //     bracketSpacing: true,
-    //     jsxBracketSameLine: false,
-    //     parser: 'flow'
-    //   }
-    // ],
-    // allow async-await
     "vue/max-attributes-per-line": 'off',
-    // "vue/max-attributes-per-line": ["error", {
-    //   "singleline": 4,
-    //   "multiline": {
-    //     "max": 3,
-    //     "allowFirstLine": true
-    //   }
-    // }],
     "vue/singleline-html-element-content-newline": ["error", {
       "ignoreWhenNoAttributes": true,
       "ignoreWhenEmpty": true,
@@ -107,6 +85,7 @@ module.exports = {
     "vue/html-closing-bracket-spacing": 'off',
     'no-empty': 'off',
     'generator-star-spacing': 'off',
+    'allowMultiplePropertiesPerLine': '2',
     // allow paren-less arrow functions
     'arrow-parens': 'off',
     'one-var': 'off',
