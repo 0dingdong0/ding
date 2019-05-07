@@ -1,3 +1,4 @@
+import errors from 'src/errors.js'
 import { GET_AND_UPDATE_CURRENT_ACCOUNT } from '../store/modules/action-types'
 
 /*
@@ -27,10 +28,9 @@ export default async ({ store, router }) => {
           // here needs nothing to be done.
         }
       } else {
-        // TODO: Design Error System
-        if (error.message === 'no access token found!') {
+        if (error.message === errors.AUTH.TOKEN_ABSENT) {
           // nothing to do
-          // bsent tokens result in redirecting to '/login'
+          // absent tokens result in redirecting to '/login'
         } else {
           throw error
         }

@@ -1,3 +1,5 @@
+import errors from 'src/errors'
+
 import {
   UPDATE_TOKEN,
   UPDATE_CURRENT_ACCOUNT
@@ -45,7 +47,7 @@ export default {
     },
     async [GET_AND_UPDATE_CURRENT_ACCOUNT]({ commit, state }) {
       if (!localStorage.getItem('auth_access_token')) {
-        throw Error('no access token found!')
+        throw Error(errors.AUTH.TOKEN_ABSENT)
       }
       let response = await this.$axios.get(state.end_points.get_current_account)
       // console.log('action', response.data)
