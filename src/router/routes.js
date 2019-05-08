@@ -1,6 +1,5 @@
 const loginPath = {
   path: '/login',
-  name: 'name',
   component: () => import('pages/auth/Login.vue'),
   children: [
     { path: '', component: () => import('pages/auth/LoginBackground') }
@@ -9,7 +8,6 @@ const loginPath = {
 
 const rootPath = {
   path: '/',
-  name: 'root',
   component: () => import('layouts/MyLayout.vue'),
   children: []
 }

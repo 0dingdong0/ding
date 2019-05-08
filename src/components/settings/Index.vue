@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="text-h6">
-      Settings
+    <div class="text-h6 text-center">
+      <span>设 置</span>
     </div>
-    [Settings]Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    <q-separator />
     <router-view />
   </div>
 </template>
@@ -12,5 +12,4 @@
 </script>
 
 <style>
-
 </style>

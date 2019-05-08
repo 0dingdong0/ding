@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lff">
+  <q-layout view="lHh Lpr lfr">
     <q-header elevated class="glossy no-wrap">
       <q-toolbar>
         <q-btn flat dense round
@@ -37,7 +37,7 @@
     <q-drawer v-model="ui.leftDrawerOpen" bordered
               content-class="bg-grey-2"
               :width="ui.leftDrawerWith">
-      <!-- TODO:  -->
+      <!-- TODO:  remove usefulless items -->
       <q-img src="https://cdn.quasar-framework.org/img/material.png"
              class="absolute-top"
              style="height: 150px">

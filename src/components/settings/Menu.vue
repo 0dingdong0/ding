@@ -9,25 +9,18 @@
       </q-item-section>
     </q-item>
     <q-separator />
-    <q-expansion-item dense default-opened icon="person" label="账 户">
-      <q-item
-        v-ripple
-        clickable
-        dense
-        exact
-        :to="{ name: 'user-profile' }"
-        :inset-level="secondInsetLevel"
-      >
+    <q-expansion-item dense default-opened
+                      icon="person" label="账 户">
+      <q-item v-ripple clickable dense exact
+              class="bg-grey-3"
+              :to="{ name: 'user-profile' }"
+              :inset-level="secondInsetLevel">
         <q-item-section>基本信息</q-item-section>
       </q-item>
-      <q-item
-        v-ripple
-        clickable
-        dense
-        exact
-        :to="{ name: 'change-password' }"
-        :inset-level="secondInsetLevel"
-      >
+      <q-item v-ripple clickable dense exact
+              class="bg-grey-3"
+              :to="{ name: 'change-password' }"
+              :inset-level="secondInsetLevel">
         <q-item-section>修改密码</q-item-section>
       </q-item>
     </q-expansion-item>

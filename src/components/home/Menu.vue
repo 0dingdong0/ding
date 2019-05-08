@@ -1,23 +1,15 @@
 <template>
-  <q-tab-panel :name="name">
+  <div>
     <div class="text-h6">
       Home Menu
     </div>
     [Menu]Lorem ipsum dolor sit amet consectetur adipisicing elit.
-  </q-tab-panel>
+  </div>
 </template>
 
 <script>
-export default {
-  props: {
-    name: {
-      type: String,
-      required: true
-    }
-  }
-}
+export default {}
 </script>
 
 <style>
-
 </style>
