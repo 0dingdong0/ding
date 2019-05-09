@@ -8,6 +8,16 @@ import { GET_AND_UPDATE_CURRENT_ACCOUNT } from '../store/modules/action-types'
  */
 
 export default async ({ store, router }) => {
+  const notify = (message, position = 'top', timeout = 3000, color = 'red') => {
+    router.app.$q.notify({
+      position: position,
+      message: message,
+      timeout: timeout,
+      color: color,
+      actions: [{ icon: 'close', color: 'white' }]
+    })
+  }
+
   return store
     .dispatch(`auth/${GET_AND_UPDATE_CURRENT_ACCOUNT}`)
     .catch(error => {
@@ -31,6 +41,13 @@ export default async ({ store, router }) => {
         if (error.message === errors.AUTH.TOKEN_ABSENT) {
           // nothing to do
           // absent tokens result in redirecting to '/login'
+        } else if (error.message === 'Network Error') {
+          // server is off
+          const error_message = '服务器 暂时 离线， 请稍后再试！'
+          console.log(error_message)
+          setTimeout(() => {
+            notify(error_message)
+          }, 1000)
         } else {
           throw error
         }

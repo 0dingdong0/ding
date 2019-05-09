@@ -13,15 +13,15 @@
                       icon="person" label="账 户">
       <q-item v-ripple clickable dense exact
               class="bg-grey-3"
-              :to="{ name: 'user-profile' }"
+              :to="{ name: 'login-setup' }"
               :inset-level="secondInsetLevel">
-        <q-item-section>基本信息</q-item-section>
+        <q-item-section>登录信息</q-item-section>
       </q-item>
       <q-item v-ripple clickable dense exact
               class="bg-grey-3"
-              :to="{ name: 'change-password' }"
+              :to="{ name: 'user-profile' }"
               :inset-level="secondInsetLevel">
-        <q-item-section>修改密码</q-item-section>
+        <q-item-section>基本信息</q-item-section>
       </q-item>
     </q-expansion-item>
   </q-list>
