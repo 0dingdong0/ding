@@ -6,7 +6,7 @@ import {
 } from './mutation-types'
 import {
   OBTAIN_TOKEN,
-  GET_AND_UPDATE_CURRENT_ACCOUNT
+  GET_CURRENT_ACCOUNT
 } from './action-types'
 
 let server = process.env.API
@@ -44,7 +44,7 @@ export default {
       let response = await this.$axios.post(state.end_points.obtain_jwt, form)
       commit(UPDATE_TOKEN, response.data)
     },
-    async [GET_AND_UPDATE_CURRENT_ACCOUNT]({ commit, state }) {
+    async [GET_CURRENT_ACCOUNT]({ commit, state }) {
       if (!localStorage.getItem('auth_access_token')) {
         throw Error(errors.AUTH.TOKEN_ABSENT)
       }
@@ -62,11 +62,6 @@ export default {
       }
 
       let account = response.data.account
-
-      commit(UPDATE_CURRENT_ACCOUNT, {
-        account: account,
-        permissions
-      })
 
       return {
         account,

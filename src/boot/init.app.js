@@ -1,5 +1,6 @@
 import errors from 'src/errors.js'
-import { GET_AND_UPDATE_CURRENT_ACCOUNT } from '../store/modules/action-types'
+import { GET_CURRENT_ACCOUNT } from '../store/modules/action-types'
+import { UPDATE_CURRENT_ACCOUNT } from 'src/store/modules/mutation-types'
 
 /*
  * 1) try to get and update user information(account and permissions).
@@ -19,7 +20,10 @@ export default async ({ store, router }) => {
   }
 
   return store
-    .dispatch(`auth/${GET_AND_UPDATE_CURRENT_ACCOUNT}`)
+    .dispatch(`auth/${GET_CURRENT_ACCOUNT}`)
+    .then(result => {
+      store.commit(`auth/${UPDATE_CURRENT_ACCOUNT}`, result)
+    })
     .catch(error => {
       let response = error.response
       if (response) {
