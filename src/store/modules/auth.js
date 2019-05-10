@@ -9,8 +9,7 @@ import {
   GET_AND_UPDATE_CURRENT_ACCOUNT
 } from './action-types'
 
-// TODO: Remove hardcoding of dev server
-let server = 'http://localhost:8000'
+let server = process.env.API
 
 export default {
   namespaced: true,
