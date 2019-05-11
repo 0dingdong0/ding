@@ -46,7 +46,11 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
-import { OBTAIN_TOKEN } from '../../store/modules/action-types'
+import {
+  OBTAIN_TOKEN,
+  GET_CURRENT_ACCOUNT
+} from 'src/store/modules/action-types'
+import { UPDATE_CURRENT_ACCOUNT } from 'src/store/modules/mutation-types'
 
 export default {
   data() {
@@ -72,6 +76,7 @@ export default {
   methods: {
     submit() {
       this.ui.loading = true
+      this.$q.loading.show()
 
       this.$v.form.$touch()
       if (this.$v.form.$error) {
@@ -81,10 +86,15 @@ export default {
       this.$store
         .dispatch(`auth/${OBTAIN_TOKEN}`, this.form)
         .then(() => {
+          return this.$store.dispatch(`auth/${GET_CURRENT_ACCOUNT}`)
+        })
+        .then(result => {
+          this.$store.commit(`auth/${UPDATE_CURRENT_ACCOUNT}`, result)
           this.$router.push('/')
         })
         .finally(() => {
           this.ui.loading = false
+          // this.$q.loading.hide()
         })
     }
   }

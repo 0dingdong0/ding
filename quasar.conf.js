@@ -53,7 +53,8 @@ module.exports = function (ctx) {
         'QAvatar',
         'QImg',
         'QSeparator',
-        'QExpansionItem'
+        'QExpansionItem',
+        'QSpinnerGears'
       ],
 
       directives: [
@@ -62,8 +63,15 @@ module.exports = function (ctx) {
 
       // Quasar plugins
       plugins: [
-        'Notify'
-      ]
+        'Notify',
+        'Loading'
+      ],
+
+      config: {
+        loading: {
+          spinner: 'QSpinnerGears'
+        }
+      }
 
       // iconSet: 'ionicons-v4'
       // lang: 'de' // Quasar language

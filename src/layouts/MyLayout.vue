@@ -196,6 +196,9 @@ export default {
       this.ui.currentModule = this.$route.path.split('/')[1]
     }
   },
+  mounted() {
+    this.$q.loading.hide()
+  },
   methods: {
     openURL,
     activeModule(name) {

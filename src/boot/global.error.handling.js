@@ -1,3 +1,6 @@
+import { Loading } from 'quasar'
+
+
 export default ({ Vue, router }) => {
   const notify = (message, position = 'top', timeout = 3000, color = 'red') => {
     router.app.$q.notify({
@@ -10,6 +13,7 @@ export default ({ Vue, router }) => {
   }
 
   Vue.config.errorHandler = (error, vm, info) => {
+    Loading.hide()
     console.error(error)
     console.log(info)
     notify(error.message)
@@ -17,7 +21,7 @@ export default ({ Vue, router }) => {
 
   window.addEventListener('unhandledrejection', (event) => {
     event.preventDefault()
-
+    Loading.hide()
     event.promise.catch(error => {
       if (error.response) {
         let response = error.response
