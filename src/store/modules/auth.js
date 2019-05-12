@@ -2,11 +2,14 @@ import errors from 'src/errors'
 
 import {
   UPDATE_TOKEN,
-  UPDATE_CURRENT_ACCOUNT
+  UPDATE_CURRENT_ACCOUNT,
+  UPDATE_USER
 } from './mutation-types'
 import {
   OBTAIN_TOKEN,
-  GET_CURRENT_ACCOUNT
+  GET_CURRENT_ACCOUNT,
+  PATCH_USER,
+  SET_PASSWORD
 } from './action-types'
 
 let server = process.env.API
@@ -36,6 +39,12 @@ export default {
       state.permissions = {
         ...state.permissions,
         ...data.permissions
+      }
+    },
+    [UPDATE_USER](state, data) {
+      state.user = {
+        ...state.user,
+        ...data
       }
     }
   },
@@ -67,6 +76,13 @@ export default {
         account,
         permissions
       }
+    },
+    async [PATCH_USER]({ commit, state }, form) {
+      let response = await this.$axios.patch(state.user.url, form)
+      return response.data
+    },
+    async [SET_PASSWORD]({ commit, state }, form) {
+      await this.$axios.patch(`${state.user.url}set_password/`, form)
     }
   },
   getters: {

@@ -46,9 +46,9 @@
             <img src="https://cdn.quasar-framework.org/img/boy-avatar.png" >
           </q-avatar>
           <div class="text-weight-bold">
-            Razvan Stoenescu
+            {{ fullName }}
           </div>
-          <div>@rstoenescu</div>
+          <div>@{{ loginName }}</div>
         </div>
       </q-img>
       <q-scroll-area
@@ -173,6 +173,16 @@ export default {
         currentModule: undefined,
         activeModules: []
       }
+    }
+  },
+  computed: {
+    fullName() {
+      const last_name = this.$store.state.auth.user.last_name
+      const first_name = this.$store.state.auth.user.first_name
+      return `${last_name} ${first_name}`
+    },
+    loginName() {
+      return this.$store.state.auth.user.username
     }
   },
   beforeCreate() {
