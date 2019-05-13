@@ -1,108 +1,126 @@
 <template>
-  <div class="row justify-center">
-    <div style="min-width:260px; max-width:380px;">
-      <q-tabs v-model="currentTab"
-              class="text-grey"
-              active-color="primary"
-              indicator-color="primary"
-              align="left">
-        <q-tab name="userAndEmail" label="用户名 和 邮箱" />
-        <q-tab name="changePassword" label="密码" />
-      </q-tabs>
-      <q-tab-panels v-model="currentTab">
-        <q-tab-panel class="q-pa-none" name="userAndEmail">
-          <q-input v-model="username_email_form.username"
-                   label="用户名"
-                   bottom-slots
-                   :error="$v.username_email_form.username.$error || ui.errors.username_existed"
-                   @input="ui.errors.username_existed = false">
-            <template v-slot:error>
-              <span v-if="ui.errors.username_existed">该用户名已存在</span>
-              <span v-if="!$v.username_email_form.username.required">必 填 项</span>
-            </template>
-          </q-input>
-          <q-input v-model="username_email_form.email"
-                   label="邮箱"
-                   bottom-slots
-                   :error="$v.username_email_form.email.$error">
-            <template v-slot:error>
-              <span v-if="!$v.username_email_form.email.required">必 填 项</span>
-              <span v-if="!$v.username_email_form.email.email">Email 格式 不正确</span>
-            </template>
-          </q-input>
-          <div class="q-pa-md q-gutter-sm row justify-around">
-            <q-btn label="重 置"
-                   glossy color="red"
-                   style="width:100px;"
-                   @click="reset_username_email_form"/>
-            <q-btn label="保 存"
-                   glossy color="primary"
-                   style="width:100px;"
-                   :loading="ui.loading_username_and_email"
-                   @click="save_user_name_email" />
+  <div class="column items-center q-pa-md">
+    <q-card class="q-mb-md full-width" style="max-width:600px;">
+      <q-card-section class="q-pa-sm">
+        <div class="text-h6 text-center">
+          更改 登录名称
+        </div>
+      </q-card-section>
+      <q-separator inset />
+      <q-card-section>
+        <div class="row">
+          <div class="col-sm-6 col-12 q-px-sm">
+            <q-input v-model="username_email_form.username"
+                     label="用户名"
+                     bottom-slots
+                     :error="$v.username_email_form.username.$error || ui.errors.username_existed"
+                     @input="ui.errors.username_existed = false">
+              <template v-slot:error>
+                <span v-if="ui.errors.username_existed">该用户名已存在</span>
+                <span v-if="!$v.username_email_form.username.required">必 填 项</span>
+              </template>
+            </q-input>
           </div>
-        </q-tab-panel>
-        <q-tab-panel class="q-pa-none" name="changePassword">
-          <q-input v-model="password_form.password"
-                   label="旧密码"
-                   bottom-slots
-                   :type="ui.isPwd? 'password': 'text'"
-                   :error="$v.password_form.password.$error||ui.errors.password_failed"
-                   @input="ui.errors.password_failed = false">
-            <template v-slot:append>
-              <q-icon :name="ui.isPwd?'visibility_off':'visibility'"
-                      class="cursor-pointer"
-                      @click="ui.isPwd=!ui.isPwd"/>
-            </template>
-            <template v-slot:error>
-              <span v-if="!$v.password_form.password.required">必 填 项</span>
-              <span v-if="ui.errors.password_failed">密码错误</span>
-            </template>
-          </q-input>
-          <q-input v-model="password_form.new_password"
-                   label="新密码"
-                   bottom-slots
-                   :type="ui.isPwdNew? 'password': 'text'"
-                   :error="$v.password_form.new_password.$error">
-            <template v-slot:append>
-              <q-icon :name="ui.isPwdNew?'visibility_off':'visibility'"
-                      class="cursor-pointer"
-                      @click="ui.isPwdNew=!ui.isPwdNew"/>
-            </template>
-            <template v-slot:error>
-              <span v-if="!$v.password_form.new_password.required">必 填 项</span>
-              <span v-if="!$v.password_form.new_password.sameAs">必须与下面的新密码一致</span>
-            </template>
-          </q-input>
-          <q-input v-model="password_form.confirm_password"
-                   label="确认新密码"
-                   bottom-slots
-                   :type="ui.isPwdConfirm? 'password': 'text'"
-                   :error="$v.password_form.confirm_password.$error">
-            <template v-slot:append>
-              <q-icon :name="ui.isPwdConfirm?'visibility_off':'visibility'"
-                      class="cursor-pointer"
-                      @click="ui.isPwdConfirm=!ui.isPwdConfirm"/>
-            </template>
-            <template v-slot:error>
-              <span v-if="!$v.password_form.confirm_password.required">必 填 项</span>
-              <span v-if="!$v.password_form.confirm_password.sameAs">必须与上面的新密码一致</span>
-            </template>
-          </q-input>
-          <div class="q-pa-md q-gutter-sm row justify-around">
-            <q-btn label="重 置"
-                   glossy color="red"
-                   style="width:100px;"
-                   @click="reset_password_form" />
-            <q-btn label="确 认"
-                   glossy color="primary"
-                   style="width:100px;"
-                   :loading="ui.loading_set_password"
-                   @click="save_new_password" />
+          <div class="col-sm-6 col-12 q-px-sm">
+            <q-input v-model="username_email_form.email"
+                     label="邮箱"
+                     bottom-slots
+                     :error="$v.username_email_form.email.$error">
+              <template v-slot:error>
+                <span v-if="!$v.username_email_form.email.required">必 填 项</span>
+                <span v-if="!$v.username_email_form.email.email">Email 格式 不正确</span>
+              </template>
+            </q-input>
           </div>
-        </q-tab-panel>
-      </q-tab-panels>
-    </div>
+        </div>
+        <div class="q-gutter-sm row justify-around">
+          <q-btn label="重 置"
+                 glossy color="red"
+                 style="width:100px;"
+                 @click="reset_username_email_form"/>
+          <q-btn label="保 存"
+                 glossy color="primary"
+                 style="width:100px;"
+                 :loading="ui.loading_username_and_email"
+                 @click="save_user_name_email" />
+        </div>
+      </q-card-section>
+    </q-card>
+    <q-card class="q-mb-md full-width" style="max-width:600px;">
+      <q-card-section class="q-pa-sm">
+        <div class="text-h6 text-center">
+          更改 登录密码
+        </div>
+      </q-card-section>
+      <q-separator />
+      <q-card-section>
+        <div class="row">
+          <div class="col-12 col-sm-6 q-px-sm">
+            <q-input v-model="password_form.new_password"
+                     label="新密码"
+                     bottom-slots
+                     :type="ui.isPwdNew? 'password': 'text'"
+                     :error="$v.password_form.new_password.$error">
+              <template v-slot:append>
+                <q-icon :name="ui.isPwdNew?'visibility_off':'visibility'"
+                        class="cursor-pointer"
+                        @click="ui.isPwdNew=!ui.isPwdNew"/>
+              </template>
+              <template v-slot:error>
+                <span v-if="!$v.password_form.new_password.required">必 填 项</span>
+                <span v-if="!$v.password_form.new_password.sameAs">必须与下面的新密码一致</span>
+              </template>
+            </q-input>
+          </div>
+          <div class="col-12 col-sm-6 q-px-sm">
+            <q-input v-model="password_form.confirm_password"
+                     label="确认新密码"
+                     bottom-slots
+                     :type="ui.isPwdConfirm? 'password': 'text'"
+                     :error="$v.password_form.confirm_password.$error">
+              <template v-slot:append>
+                <q-icon :name="ui.isPwdConfirm?'visibility_off':'visibility'"
+                        class="cursor-pointer"
+                        @click="ui.isPwdConfirm=!ui.isPwdConfirm"/>
+              </template>
+              <template v-slot:error>
+                <span v-if="!$v.password_form.confirm_password.required">必 填 项</span>
+                <span v-if="!$v.password_form.confirm_password.sameAs">必须与上面的新密码一致</span>
+              </template>
+            </q-input>
+          </div>
+          <div class="col-12 col-sm-6 q-px-sm">
+            <q-input v-model="password_form.password"
+                     label="旧密码"
+                     bottom-slots
+                     :type="ui.isPwd? 'password': 'text'"
+                     :error="$v.password_form.password.$error||ui.errors.password_failed"
+                     @input="ui.errors.password_failed = false">
+              <template v-slot:append>
+                <q-icon :name="ui.isPwd?'visibility_off':'visibility'"
+                        class="cursor-pointer"
+                        @click="ui.isPwd=!ui.isPwd"/>
+              </template>
+              <template v-slot:error>
+                <span v-if="!$v.password_form.password.required">必 填 项</span>
+                <span v-if="ui.errors.password_failed">密码错误</span>
+              </template>
+            </q-input>
+          </div>
+        </div>
+        <div class="q-gutter-sm row justify-around">
+          <q-btn label="重 置"
+                 glossy color="red"
+                 style="width:100px;"
+                 @click="reset_password_form" />
+          <q-btn label="确 认"
+                 glossy color="primary"
+                 style="width:100px;"
+                 :loading="ui.loading_set_password"
+                 @click="save_new_password" />
+        </div>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -114,7 +132,6 @@ import { UPDATE_USER } from 'src/store/modules/mutation-types'
 export default {
   data() {
     return {
-      currentTab: 'userAndEmail',
       ui: {
         errors: {
           username_existed: false,
