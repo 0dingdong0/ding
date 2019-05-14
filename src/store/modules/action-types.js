@@ -1,4 +1,5 @@
 export const OBTAIN_TOKEN = 'OBTAIN_TOKEN'
 export const GET_CURRENT_ACCOUNT = 'GET_CURRENT_ACCOUNT'
-export const PATCH_USER = 'PATCH_USER'
+export const SET_LOGIN_NAME = 'SET_LOGIN_NAME'
 export const SET_PASSWORD = 'SET_PASSWORD'
+export const PATCH_USER = 'PATCH_USER'

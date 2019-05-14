@@ -10,25 +10,32 @@
       <q-card-section>
         <div class="row">
           <div class="col-sm-6 col-12 q-px-sm">
-            <q-input v-model="username_email_form.username"
+            <q-input v-model="username_form.username"
                      label="用户名"
                      bottom-slots
-                     :error="$v.username_email_form.username.$error || ui.errors.username_existed"
-                     @input="ui.errors.username_existed = false">
+                     :error="$v.username_form.username.$error || errors.username_form.username_existed"
+                     @input="errors.username_form.username_existed = false">
               <template v-slot:error>
-                <span v-if="ui.errors.username_existed">该用户名已存在</span>
-                <span v-if="!$v.username_email_form.username.required">必 填 项</span>
+                <span v-if="errors.username_form.username_existed">该用户名已存在</span>
+                <span v-if="!$v.username_form.username.required">必 填 项</span>
               </template>
             </q-input>
           </div>
           <div class="col-sm-6 col-12 q-px-sm">
-            <q-input v-model="username_email_form.email"
-                     label="邮箱"
+            <q-input v-model="username_form.password"
+                     label="密 码"
                      bottom-slots
-                     :error="$v.username_email_form.email.$error">
+                     :type="ui.username_form.isPwd? 'password': 'text'"
+                     :error="$v.username_form.password.$error || errors.username_form.password_failed"
+                     @input="errors.username_form.password_failed = false">
+              <template v-slot:append>
+                <q-icon :name="ui.username_form.isPwd?'visibility_off':'visibility'"
+                        class="cursor-pointer"
+                        @click="ui.username_form.isPwd=!ui.username_form.isPwd"/>
+              </template>
               <template v-slot:error>
-                <span v-if="!$v.username_email_form.email.required">必 填 项</span>
-                <span v-if="!$v.username_email_form.email.email">Email 格式 不正确</span>
+                <span v-if="!$v.username_form.password.required">必 填 项</span>
+                <span v-if="errors.username_form.password_failed">密码错误</span>
               </template>
             </q-input>
           </div>
@@ -37,12 +44,12 @@
           <q-btn label="重 置"
                  glossy color="red"
                  style="width:100px;"
-                 @click="reset_username_email_form"/>
+                 @click="reset_username_form"/>
           <q-btn label="保 存"
                  glossy color="primary"
                  style="width:100px;"
-                 :loading="ui.loading_username_and_email"
-                 @click="save_user_name_email" />
+                 :loading="ui.username_form.loading_set_login_name"
+                 @click="change_username" />
         </div>
       </q-card-section>
     </q-card>
@@ -59,12 +66,12 @@
             <q-input v-model="password_form.new_password"
                      label="新密码"
                      bottom-slots
-                     :type="ui.isPwdNew? 'password': 'text'"
+                     :type="ui.password_form.isPwdNew? 'password': 'text'"
                      :error="$v.password_form.new_password.$error">
               <template v-slot:append>
-                <q-icon :name="ui.isPwdNew?'visibility_off':'visibility'"
+                <q-icon :name="ui.password_form.isPwdNew?'visibility_off':'visibility'"
                         class="cursor-pointer"
-                        @click="ui.isPwdNew=!ui.isPwdNew"/>
+                        @click="ui.password_form.isPwdNew=!ui.password_form.isPwdNew"/>
               </template>
               <template v-slot:error>
                 <span v-if="!$v.password_form.new_password.required">必 填 项</span>
@@ -76,12 +83,12 @@
             <q-input v-model="password_form.confirm_password"
                      label="确认新密码"
                      bottom-slots
-                     :type="ui.isPwdConfirm? 'password': 'text'"
+                     :type="ui.password_form.isPwdConfirm? 'password': 'text'"
                      :error="$v.password_form.confirm_password.$error">
               <template v-slot:append>
-                <q-icon :name="ui.isPwdConfirm?'visibility_off':'visibility'"
+                <q-icon :name="ui.password_form.isPwdConfirm?'visibility_off':'visibility'"
                         class="cursor-pointer"
-                        @click="ui.isPwdConfirm=!ui.isPwdConfirm"/>
+                        @click="ui.password_form.isPwdConfirm=!ui.password_form.isPwdConfirm"/>
               </template>
               <template v-slot:error>
                 <span v-if="!$v.password_form.confirm_password.required">必 填 项</span>
@@ -93,17 +100,17 @@
             <q-input v-model="password_form.password"
                      label="旧密码"
                      bottom-slots
-                     :type="ui.isPwd? 'password': 'text'"
-                     :error="$v.password_form.password.$error||ui.errors.password_failed"
-                     @input="ui.errors.password_failed = false">
+                     :type="ui.password_form.isPwd? 'password': 'text'"
+                     :error="$v.password_form.password.$error||errors.password_form.password_failed"
+                     @input="errors.password_form.password_failed = false">
               <template v-slot:append>
-                <q-icon :name="ui.isPwd?'visibility_off':'visibility'"
+                <q-icon :name="ui.password_form.isPwd?'visibility_off':'visibility'"
                         class="cursor-pointer"
-                        @click="ui.isPwd=!ui.isPwd"/>
+                        @click="ui.password_form.isPwd=!ui.password_form.isPwd"/>
               </template>
               <template v-slot:error>
                 <span v-if="!$v.password_form.password.required">必 填 项</span>
-                <span v-if="ui.errors.password_failed">密码错误</span>
+                <span v-if="errors.password_form.password_failed">密码错误</span>
               </template>
             </q-input>
           </div>
@@ -116,8 +123,8 @@
           <q-btn label="确 认"
                  glossy color="primary"
                  style="width:100px;"
-                 :loading="ui.loading_set_password"
-                 @click="save_new_password" />
+                 :loading="ui.password_form.set_password"
+                 @click="change_password" />
         </div>
       </q-card-section>
     </q-card>
@@ -125,28 +132,38 @@
 </template>
 
 <script>
-import { required, email, sameAs } from 'vuelidate/lib/validators'
-import { PATCH_USER, SET_PASSWORD } from 'src/store/modules/action-types'
+import { required, sameAs } from 'vuelidate/lib/validators'
+import { SET_LOGIN_NAME, SET_PASSWORD } from 'src/store/modules/action-types'
 import { UPDATE_USER } from 'src/store/modules/mutation-types'
 
 export default {
   data() {
     return {
-      ui: {
-        errors: {
+      errors: {
+        username_form: {
           username_existed: false,
+          password_failed: false
+        },
+        password_form: {
           password_failed: false,
           passwords_inconsistent: false
-        },
-        loading_set_password: false,
-        loading_username_and_email: false,
-        isPwd: true,
-        isPwdNew: true,
-        isPwdConfirm: true
+        }
       },
-      username_email_form: {
+      ui: {
+        username_form: {
+          loading_set_login_name: false,
+          isPwd: true
+        },
+        password_form: {
+          loading_set_password: false,
+          isPwd: true,
+          isPwdNew: true,
+          isPwdConfirm: true
+        }
+      },
+      username_form: {
         username: '',
-        email: ''
+        password: ''
       },
       password_form: {
         password: '',
@@ -156,9 +173,9 @@ export default {
     }
   },
   validations: {
-    username_email_form: {
+    username_form: {
       username: { required },
-      email: { required, email }
+      password: { required }
     },
     password_form: {
       password: { required },
@@ -173,73 +190,87 @@ export default {
     }
   },
   created() {
-    this.reset_username_email_form()
+    this.reset_username_form()
     this.reset_password_form()
   },
   methods: {
-    reset_username_email_form() {
-      this.username_email_form.username = this.$store.state.auth.user.username
-      this.username_email_form.email = this.$store.state.auth.user.email
+    reset_username_form() {
+      this.username_form.username = this.$store.state.auth.user.username
+      this.username_form.password = ''
+      this.$v.username_form.$reset()
     },
     reset_password_form() {
       this.password_form.password = ''
       this.password_form.new_password = ''
       this.password_form.confirm_password = ''
+      this.$v.password_form.$reset()
     },
-    save_user_name_email() {
-      this.$v.username_email_form.$touch()
-      if (this.$v.username_email_form.$error) {
+    change_username() {
+      this.$v.username_form.$touch()
+      if (this.$v.username_form.$error) {
         return
       }
-      this.ui.loading_username_and_email = true
+      this.ui.username_form.loading_set_login_name = true
       this.$store
-        .dispatch(`auth/${PATCH_USER}`, this.username_email_form)
+        .dispatch(`auth/${SET_LOGIN_NAME}`, this.username_form)
         .then(data => {
           this.$store.commit(`auth/${UPDATE_USER}`, data)
+          this.reset_username_form()
+          // TODO: define shortcut notify function for error, info, etc.
+          this.$q.notify({
+            position: 'center',
+            color: 'primary',
+            message: '登录名 已更新',
+            actions: [{ icon: 'close', color: 'white' }],
+            timeout: 3000
+          })
         })
         .catch(error => {
           const response = error.response
-          if (response && response.status === 400) {
+          if (response && response.status === 409) {
             console.log(response.data)
-            this.ui.errors.username_existed = true
+            this.errors.username_form.username_existed = true
+          } else if (response && response.status === 405) {
+            console.log(response.data)
+            this.errors.username_form.password_failed = true
           }
         })
         .finally(() => {
-          this.ui.loading_username_and_email = false
+          this.ui.username_form.loading_set_login_name = false
         })
     },
-    save_new_password() {
+    change_password() {
       this.$v.password_form.$touch()
       if (this.$v.password_form.$error) {
         return
       }
 
-      this.ui.loading_set_password = true
+      this.ui.password_form.set_password = true
       this.$store
         .dispatch(`auth/${SET_PASSWORD}`, this.password_form)
         .then(data => {
+          this.reset_password_form()
+          // TODO: define shortcut notify function for error, info, etc.
           this.$q.notify({
             position: 'center',
             color: 'primary',
             message: '密码已更新',
-            action: [{ icon: 'close', color: 'white' }],
+            actions: [{ icon: 'close', color: 'white' }],
             timeout: 3000
           })
         })
         .catch(error => {
-          console.log('password' in error.response.data)
           const response = error.response
-          if (response && response.status === 400) {
+          if (response && response.status === 405) {
             console.log(response.data)
-            if ('password' in response.data) {
-              this.ui.errors.password_failed = true
-            } else if ('new_password' in response.data) {
-              this.ui.errors.passwords_inconsistent = true
-            }
+            this.errors.password_form.password_failed = true
+          } else if (response && response.status === 400) {
+            console.log(response.data)
+            this.errors.password_form.passwords_inconsistent = true
           }
         })
         .finally(() => {
-          this.ui.loading_set_password = false
+          this.ui.password_form.set_password = false
         })
     }
   }

@@ -8,8 +8,9 @@ import {
 import {
   OBTAIN_TOKEN,
   GET_CURRENT_ACCOUNT,
-  PATCH_USER,
-  SET_PASSWORD
+  SET_LOGIN_NAME,
+  SET_PASSWORD,
+  PATCH_USER
 } from './action-types'
 
 let server = process.env.API
@@ -83,6 +84,10 @@ export default {
     },
     async [SET_PASSWORD]({ commit, state }, form) {
       await this.$axios.patch(`${state.user.url}set_password/`, form)
+    },
+    async [SET_LOGIN_NAME]({ commit, state }, form) {
+      let response = await this.$axios.patch(`${state.user.url}set_login_name/`, form)
+      return response.data
     }
   },
   getters: {
