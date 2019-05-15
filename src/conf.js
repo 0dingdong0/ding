@@ -1,4 +1,4 @@
-export default {
+const errors = {
   'AUTH': {
     'TOKEN_ABSENT': '00000-TOKENS_ABSENT',
     'ACCESS_TOKEN_EXPIRED': '00001-ACCESS_TOKEN_EXPIRED',
@@ -6,3 +6,5 @@ export default {
   },
   'UNKNOW': '99999-UNKNOW'
 }
+
+export { errors }

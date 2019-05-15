@@ -1,22 +1,13 @@
 import { Loading } from 'quasar'
-
+import notify from 'src/notify'
 
 export default ({ Vue, router }) => {
-  const notify = (message, position = 'top', timeout = 3000, color = 'red') => {
-    router.app.$q.notify({
-      position: position,
-      message: message,
-      timeout: timeout,
-      color: color,
-      actions: [{ icon: 'close', color: 'white' }]
-    })
-  }
 
   Vue.config.errorHandler = (error, vm, info) => {
     Loading.hide()
     console.error(error)
     console.log(info)
-    notify(error.message)
+    notify.error(error.message)
   }
 
   window.addEventListener('unhandledrejection', (event) => {
@@ -33,9 +24,9 @@ export default ({ Vue, router }) => {
             if (method === 'post' && url.endsWith('/api/token/obtain/')) {
               // login failed
               console.log(response.data.detail)
-              notify('用户名 或 密码 错误 ！')
+              notify.error('用户名 或 密码 错误 ！')
             } else if (method === 'post' && url.endsWith('/api/token/refresh/')) {
-              notify('口令 刷新 失败 ！')
+              notify.error('口令 刷新 失败 ！')
             } else {
               console.error(error)
 
@@ -43,11 +34,11 @@ export default ({ Vue, router }) => {
             break
           default:
             console.error(error)
-            notify('unhandled [networking promise] rejections! see details in console.')
+            notify.error('unhandled [networking promise] rejections! see details in console.')
         }
       } else {
         console.error(error)
-        notify('unhandled rejections! see details in console.')
+        notify.error('unhandled rejections! see details in console.')
       }
     })
   })

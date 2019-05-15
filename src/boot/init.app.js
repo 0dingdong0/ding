@@ -1,4 +1,5 @@
-import errors from 'src/errors.js'
+import { errors } from 'src/conf'
+import notify from 'src/notify'
 import { GET_CURRENT_ACCOUNT } from '../store/modules/action-types'
 import { UPDATE_CURRENT_ACCOUNT } from 'src/store/modules/mutation-types'
 
@@ -9,15 +10,6 @@ import { UPDATE_CURRENT_ACCOUNT } from 'src/store/modules/mutation-types'
  */
 
 export default async ({ store, router }) => {
-  const notify = (message, position = 'top', timeout = 3000, color = 'red') => {
-    router.app.$q.notify({
-      position: position,
-      message: message,
-      timeout: timeout,
-      color: color,
-      actions: [{ icon: 'close', color: 'white' }]
-    })
-  }
 
   return store
     .dispatch(`auth/${GET_CURRENT_ACCOUNT}`)
@@ -50,7 +42,7 @@ export default async ({ store, router }) => {
           const error_message = '服务器 暂时 离线， 请稍后再试！'
           console.log(error_message)
           setTimeout(() => {
-            notify(error_message)
+            notify.error(error_message)
           }, 1000)
         } else {
           throw error

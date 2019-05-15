@@ -1,4 +1,4 @@
-import errors from 'src/errors'
+import { errors } from 'src/conf'
 
 import {
   UPDATE_TOKEN,

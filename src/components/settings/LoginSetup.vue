@@ -132,6 +132,7 @@
 </template>
 
 <script>
+import notify from 'src/notify'
 import { required, sameAs } from 'vuelidate/lib/validators'
 import { SET_LOGIN_NAME, SET_PASSWORD } from 'src/store/modules/action-types'
 import { UPDATE_USER } from 'src/store/modules/mutation-types'
@@ -216,14 +217,7 @@ export default {
         .then(data => {
           this.$store.commit(`auth/${UPDATE_USER}`, data)
           this.reset_username_form()
-          // TODO: define shortcut notify function for error, info, etc.
-          this.$q.notify({
-            position: 'center',
-            color: 'primary',
-            message: '登录名 已更新',
-            actions: [{ icon: 'close', color: 'white' }],
-            timeout: 3000
-          })
+          notify.info('登录名 已更新')
         })
         .catch(error => {
           const response = error.response
@@ -245,19 +239,12 @@ export default {
         return
       }
 
-      this.ui.password_form.set_password = true
+      this.ui.password_form.loading_set_password = true
       this.$store
         .dispatch(`auth/${SET_PASSWORD}`, this.password_form)
         .then(data => {
           this.reset_password_form()
-          // TODO: define shortcut notify function for error, info, etc.
-          this.$q.notify({
-            position: 'center',
-            color: 'primary',
-            message: '密码已更新',
-            actions: [{ icon: 'close', color: 'white' }],
-            timeout: 3000
-          })
+          notify.info('密码已更新')
         })
         .catch(error => {
           const response = error.response
@@ -270,7 +257,7 @@ export default {
           }
         })
         .finally(() => {
-          this.ui.password_form.set_password = false
+          this.ui.password_form.loading_set_password = false
         })
     }
   }
