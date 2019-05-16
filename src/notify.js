@@ -2,7 +2,6 @@ import { Notify } from 'quasar'
 
 export default {
   error: (message) => {
-
     Notify.create({
       message,
       position: 'top',
@@ -13,7 +12,6 @@ export default {
     })
   },
   info: (message) => {
-
     Notify.create({
       message,
       position: 'center',
