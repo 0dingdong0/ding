@@ -38,6 +38,7 @@ module.exports = function (ctx) {
         'QPage',
         'QToolbar',
         'QToolbarTitle',
+        'QBtnGroup',
         'QBtn',
         'QIcon',
         'QList',
@@ -57,7 +58,8 @@ module.exports = function (ctx) {
         'QSpinnerGears',
         'QCard',
         'QCardSection',
-        'QCardActions'
+        'QCardActions',
+        'QSelect'
       ],
 
       directives: [
