@@ -12,6 +12,7 @@ export default {
     })
   },
   info: (message) => {
+
     Notify.create({
       message,
       position: 'center',
