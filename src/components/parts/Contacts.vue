@@ -7,12 +7,13 @@
     </q-card-section>
     <q-separator inset />
     <q-card-section>
-      <div v-for="contact in contacts"
-           :key="contact.id"
+      <div v-for="(contact, idx) in contacts"
+           :key="idx"
            class="row">
         <div class="col-3 q-px-sm">
           <q-select v-model="contact.type"
                     dense
+                    :readonly="ui.readOnly[idx]"
                     :options="ui.contact_types"
                     options-selected-class="text-deep-primary" >
             <template v-slot:option="scope">
@@ -35,13 +36,32 @@
         </div>
         <div class="col q-px-sm">
           <q-input v-model="contact.value"
+                   :readonly="ui.readOnly[idx]"
                    dense/>
         </div>
         <div class="col-shrink q-px-sm">
           <q-btn-group flat>
-            <q-btn icon="clear" dense :loading="ui.loading_patch" />
+            <q-btn icon="clear" dense
+                   :loading="ui.loading_patch"
+                   @click="removeContact(idx)" />
+            <q-btn v-if="!ui.readOnly[idx]"
+                   icon="done" dense
+                   :loading="ui.loading_patch"
+                   @click="addContact(idx)" />
+            <q-btn v-if="ui.readOnly[idx]"
+                   icon="edit" dense
+                   :loading="ui.loading_patch"
+                   @click="editContact(idx)" />
           </q-btn-group>
         </div>
+      </div>
+    </q-card-section>
+    <q-card-section>
+      <div class="q-gutter-sm row justify-around">
+        <q-btn label="添 加"
+               glossy color="primary"
+               style="width:100px;"
+               @click="new_contact" />
       </div>
     </q-card-section>
   </q-card>
@@ -61,6 +81,7 @@ export default {
   data() {
     return {
       ui: {
+        readOnly: [],
         loading_patch_user: false,
         contact_types: [
           {
@@ -76,11 +97,31 @@ export default {
   },
 
   created() {
-    // this.contacts.push({
-    //   id: '1',
-    //   type: 'Email',
-    //   value: this.$store.state.auth.user.email
-    // })
+    //JSON.parse(JSON.stringify(obj)) used to deep copy contacts
+    this.ui.readOnly = Array(this.contacts.length).fill(true)
+  },
+
+  methods: {
+    new_contact() {
+      this.contacts.push({
+        id: '',
+        type: '',
+        value: ''
+      })
+      this.ui.readOnly.push(false)
+    },
+    addContact(idx) {
+      console.log('add contact:', this.contacts[idx])
+    },
+    removeContact(idx) {
+      const contact = this.contacts[idx]
+      if (contact.id) {
+        this.$emit('removeContact', idx)
+      } else {
+        this.contacts.splice(idx, 1)
+      }
+    },
+    editContact(idx) {}
   }
 }
 </script>

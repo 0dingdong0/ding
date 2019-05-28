@@ -40,6 +40,8 @@
             </q-input>
           </div>
         </div>
+      </q-card-section>
+      <q-card-section>
         <div class="q-gutter-sm row justify-around">
           <q-btn label="重 置"
                  glossy color="red"
@@ -115,6 +117,8 @@
             </q-input>
           </div>
         </div>
+      </q-card-section>
+      <q-card-section>
         <div class="q-gutter-sm row justify-around">
           <q-btn label="重 置"
                  glossy color="red"
